@@ -9,12 +9,12 @@
 
 from PyQt5.QtCore import Qt
 
-from McuaFrames import McuaFrame1
 from FreeFallFrame import FreeFallFrame
 from MruaFrame import MruaFrame
 from McuaFrames import McuaFrame1, McuaFrame2
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ErrorBox import ErrorBoxWidget
+from GraphicSimulator1 import Program
 
 
 class Ui_MainSimulatorWindow(QtWidgets.QMainWindow):
@@ -114,7 +114,7 @@ class Ui_MainSimulatorWindow(QtWidgets.QMainWindow):
         self.EXITbuttom.setFont(self.labelFont)
         self.EXITbuttom.setStyleSheet(self.pushButtonStyle)
         self.EXITbuttom.setObjectName("EXITbuttom")
-        self.EXITbuttom.clicked.connect(self.exitbut)
+        self.EXITbuttom.clicked.connect(self.exitButton)
 
         self.horizontalLayout.addWidget(self.EXITbuttom)
         self.horizontalLayout.setStretch(0, 3)
@@ -227,13 +227,12 @@ class Ui_MainSimulatorWindow(QtWidgets.QMainWindow):
         self.showMaximized()
 
     @staticmethod
-    def exitbut():
+    def exitButton():
         sys.exit()
 
     def free_fall_button(self, but):
         self.currentButton = but
         self.frame_5_layout.removeWidget(self.buttons_frame)
-        self.frame_5_layout.removeWidget(self.buttons_frame_2)
 
         # frame
         self.buttons_frame = FreeFallFrame(self.frame_5)
@@ -262,14 +261,19 @@ class Ui_MainSimulatorWindow(QtWidgets.QMainWindow):
     def loadButton(self):
         if self.currentButton == "FreeFallButton":
             values = self.buttons_frame.getText()
-            if values is not None:
+            values_2 = self.buttons_frame_2.getText()
+            if values is not None and values_2 is not None:
+                temp_size=(self.buttons_video_frame.size().width(), self.buttons_video_frame.height())
+                print((values[0],values[1],values[2],values_2,[500,900]))
+                program = Program(values[0],values[1],values[2],values_2,[500,900])
+                program.run()
                 pass
             else:
                 self.typical_error_message.show()
             pass
         elif self.currentButton == "MruaButton":
             values = self.buttons_frame.getText()
-            if values is not None:
+            if values is not None :
                 pass
             else:
                 self.typical_error_message.show()
@@ -292,8 +296,7 @@ class Ui_MainSimulatorWindow(QtWidgets.QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainSimulatorWindow.setWindowTitle(_translate("MainSimulatorWindow", "PYSIMULATOR"))
         self.label.setText(_translate("MainSimulatorWindow",
-                                      "<html><head/><body><p>PYSIMULATOR<span style=\" "
-                                      "font-size:9pt;\">byJesusAragon</span></p></body></html>"))
+                                      "<html><head/><body><p>PYSIMULATOR</span></p></body></html>"))
         self.EXITbuttom.setText(_translate("MainSimulatorWindow", "Exit"))
         """self.COLITIONbuttom.setText(_translate("MainSimulatorWindow", "COLITIONS"))"""
         self.MCUAbuttom.setText(_translate("MainSimulatorWindow", "MCUA"))

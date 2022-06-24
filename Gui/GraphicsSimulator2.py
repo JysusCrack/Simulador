@@ -1,6 +1,6 @@
 import numpy as numpy
 import pygame
-from pygame.locals import *
+import sys
 from pygame.time import Clock
 
 
@@ -78,11 +78,6 @@ class Program(object):
                 if ev.type == pygame.QUIT:
                     self.is_running = False
                     break
-                elif ev.type == MOUSEWHEEL:
-                    print(ev)
-                    print(ev.x, ev.y)
-                    print(ev.flipped)
-                    print(ev.which)
 
             self.screen.fill(self.black)
             # draw zone
@@ -93,10 +88,8 @@ class Program(object):
                 self.screen.blit(self.back_ground, (0, -(1980 - self.screen_size[1])))
             self.objects_in_screen.draw(self.screen)
             self.moving_object.update(self.pass_time / 16)
-            # timeline
-            pygame.draw.line(self.screen, (255, 255, 255), (self.screen_size[0] - 10, 10),
-                             (self.screen_size[0] - 10, self.screen_size[1] - 10), width=10)
-
+            pygame.draw.line(self.screen, (255, 255, 255), (self.screen_size[0]-10, 10),
+                             (self.screen_size[0]-10, self.screen_size[1]-10), width=10)
             self.isOver()
             # end of draw zone
             pygame.display.flip()

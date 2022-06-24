@@ -134,6 +134,7 @@ class McuaFrame1(QtWidgets.QFrame):
             return None
         pass
 
+
 class McuaFrame2(QtWidgets.QFrame):
     def __init__(self, parent_widget):
         super(McuaFrame2, self).__init__(parent_widget)
